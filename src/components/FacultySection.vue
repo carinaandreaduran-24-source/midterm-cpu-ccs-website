@@ -4,10 +4,39 @@
       <h2 class="section-title">Faculty & Staff</h2>
       <p class="section-subtitle">Meet the educators and administrative mentors behind CCS academic success</p>
 
-      <div v-for="dept in departments" :key="dept.name" class="department-block">
+      <!-- Interactive Search & Filter Controls -->
+      <div class="filter-bar">
+        <input 
+          v-model="searchQuery" 
+          type="text" 
+          placeholder="🔍 Search faculty by name or degree..." 
+          class="search-input"
+        />
+        <div class="dept-tabs">
+          <button 
+            class="tab-btn" 
+            :class="{ active: selectedDept === 'All' }"
+            @click="selectedDept = 'All'"
+          >
+            All Departments
+          </button>
+          <button 
+            v-for="dept in departments" 
+            :key="dept.name"
+            class="tab-btn" 
+            :class="{ active: selectedDept === dept.name }"
+            @click="selectedDept = dept.name"
+          >
+            {{ dept.shortName }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Department Sections -->
+      <div v-for="dept in filteredDepartments" :key="dept.name" class="department-block">
         <h3 class="dept-title">{{ dept.name }}</h3>
 
-        <div class="faculty-grid">
+        <div v-if="dept.members.length > 0" class="faculty-grid">
           <div v-for="member in dept.members" :key="member.name" class="faculty-card">
             <div class="avatar-wrapper">
               <img :src="member.photo" :alt="member.name" class="faculty-img" />
@@ -19,15 +48,22 @@
             </div>
           </div>
         </div>
+        <p v-else class="no-results">No faculty members found matching your search.</p>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
+
+const searchQuery = ref('')
+const selectedDept = ref('All')
+
 const departments = [
   {
     name: 'Office of the Dean & Administration',
+    shortName: 'Administration',
     members: [
       {
         name: 'Prof. Ma. Christina A. Quijano',
@@ -45,6 +81,7 @@ const departments = [
   },
   {
     name: 'Computer Science & BSDMIA Department',
+    shortName: 'CS & DMIA',
     members: [
       {
         name: 'Prof. Marjee Rose B. Parreño',
@@ -62,6 +99,7 @@ const departments = [
   },
   {
     name: 'Information Technology & Systems Department',
+    shortName: 'IT Department',
     members: [
       {
         name: 'Prof. Rose Leah Joy A. Ojacastro',
@@ -79,6 +117,7 @@ const departments = [
   },
   {
     name: 'Library and Information Science Department',
+    shortName: 'BLIS Department',
     members: [
       {
         name: 'Prof. Ana Mae B. Cantel',
@@ -89,11 +128,24 @@ const departments = [
     ]
   }
 ]
+
+const filteredDepartments = computed(() => {
+  return departments
+    .filter(dept => selectedDept.value === 'All' || dept.name === selectedDept.value)
+    .map(dept => {
+      const filteredMembers = dept.members.filter(m => 
+        m.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        m.highestDegree.toLowerCase().includes(searchQuery.value.toLowerCase())
+      )
+      return { ...dept, members: filteredMembers }
+    })
+})
 </script>
 
 <style scoped>
 .faculty-section-bg {
-  background-color: var(--gray-bg);
+  background-color: #f3f4f6;
+  padding: 80px 20px;
 }
 
 .container-inner {
@@ -101,15 +153,64 @@ const departments = [
   margin: 0 auto;
 }
 
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input:focus {
+  border-color: #003366;
+  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.15);
+}
+
+.dept-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover, .tab-btn.active {
+  background: #003366;
+  color: #ffffff;
+  border-color: #003366;
+}
+
 .department-block {
   margin-bottom: 48px;
 }
 
 .dept-title {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: var(--primary-color);
-  border-left: 4px solid var(--secondary-color);
+  color: #003366;
+  border-left: 4px solid #f2a900;
   padding-left: 12px;
   margin-bottom: 20px;
 }
@@ -123,23 +224,25 @@ const departments = [
 .faculty-card {
   background: #ffffff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 24px 20px;
   text-align: center;
   border: 1px solid #e5e7eb;
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .faculty-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-wrapper {
-  width: 96px;
-  height: 96px;
+  width: 90px;
+  height: 90px;
   margin: 0 auto 16px auto;
   border-radius: 50%;
   background: #f3f4f6;
-  border: 3px solid var(--primary-color);
+  border: 3px solid #003366;
   overflow: hidden;
 }
 
@@ -152,7 +255,7 @@ const departments = [
 .faculty-name {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #1f2937;
   margin-bottom: 4px;
 }
 
@@ -166,9 +269,14 @@ const departments = [
 .faculty-role {
   display: inline-block;
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: #4b5563;
   background: #f3f4f6;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.no-results {
+  color: #6b7280;
+  font-style: italic;
 }
 </style>
