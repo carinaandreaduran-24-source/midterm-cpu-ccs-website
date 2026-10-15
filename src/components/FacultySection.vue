@@ -69,13 +69,13 @@ const departments = [
         name: 'Prof. Ma. Christina A. Quijano',
         highestDegree: 'Master of Science in Computer Science (MSCS)',
         position: 'Dean, College of Computer Studies',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Christina'
+        photo: '/images/faculty/quijano.jpg'
       },
       {
         name: 'Prof. Rea P. Balontong',
         highestDegree: 'Master of Business Administration (MBA)',
         position: 'Department Head / Senior Administrator',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rea'
+        photo: '/images/faculty/balontong.jpg'
       }
     ]
   },
@@ -87,13 +87,13 @@ const departments = [
         name: 'Prof. Marjee Rose B. Parreño',
         highestDegree: 'Master of Science in Computer Science (MSCS)',
         position: 'Department Chairperson',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Marjee'
+        photo: '/images/faculty/parreno.jpg'
       },
       {
         name: 'Prof. Pedro Peter Rhys B. Cambronero',
         highestDegree: 'Master of Science in Computer Science (MSCS)',
         position: 'Assistant Professor',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Pedro'
+        photo: '/images/faculty/cambronero.jpg'
       }
     ]
   },
@@ -105,13 +105,13 @@ const departments = [
         name: 'Prof. Rose Leah Joy A. Ojacastro',
         highestDegree: 'Master of Science in Computer Science (MSCS)',
         position: 'Department Chairperson',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=RoseLeah'
+        photo: '/images/faculty/ojacastro.jpg'
       },
       {
         name: 'Prof. Lennon D. Pajar',
         highestDegree: 'Master of Science in Computer Science (MSCS)',
         position: 'IT Instructor / Coordinator',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lennon'
+        photo: '/images/faculty/pajar.jpg'
       }
     ]
   },
@@ -123,7 +123,7 @@ const departments = [
         name: 'Prof. Ana Mae B. Cantel',
         highestDegree: 'Master of Library and Information Science (MLIS)',
         position: 'BLIS Program Coordinator',
-        photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AnaMae'
+        photo: '/images/faculty/cantel.jpg'
       }
     ]
   }
