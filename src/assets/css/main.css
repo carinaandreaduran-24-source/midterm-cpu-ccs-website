@@ -14,9 +14,9 @@ html {
 }
 
 :root {
-  --primary-color: #003366;    /* CPU Navy Blue */
-  --secondary-color: #f2a900;  /* CPU Gold */
-  --accent-color: #10b981;     /* Tech Green */
+  --primary-color: #003366;    
+  --secondary-color: #f2a900;  
+  --accent-color: #10b981;     
   --dark-bg: #111827;
   --light-bg: #ffffff;
   --gray-bg: #f3f4f6;

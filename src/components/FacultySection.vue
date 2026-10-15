@@ -12,6 +12,8 @@
           placeholder="🔍 Search faculty by name or degree..." 
           class="search-input"
         />
+
+        <!-- Tabs for department selection -->
         <div class="dept-tabs">
           <button 
             class="tab-btn" 
@@ -36,6 +38,8 @@
       <div v-for="dept in filteredDepartments" :key="dept.name" class="department-block">
         <h3 class="dept-title">{{ dept.name }}</h3>
 
+        <!-- Displays para sa faculty grid if ga match ang filter criteria -->
+
         <div v-if="dept.members.length > 0" class="faculty-grid">
           <div v-for="member in dept.members" :key="member.name" class="faculty-card">
             <div class="avatar-wrapper">
@@ -48,6 +52,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Fallback message kung wala match sa search -->
         <p v-else class="no-results">No faculty members found matching your search.</p>
       </div>
     </div>
@@ -57,9 +63,12 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+//Reactive state sa search 
 const searchQuery = ref('')
 const selectedDept = ref('All')
 
+
+//Data sang faculty kag organized kung ano na dept.
 const departments = [
   {
     name: 'Office of the Dean & Administration',
@@ -129,6 +138,7 @@ const departments = [
   }
 ]
 
+//Ga automatic filter sang results kung mag change 
 const filteredDepartments = computed(() => {
   return departments
     .filter(dept => selectedDept.value === 'All' || dept.name === selectedDept.value)
@@ -142,7 +152,9 @@ const filteredDepartments = computed(() => {
 })
 </script>
 
+
 <style scoped>
+/* Section sang background kag inner layout */
 .faculty-section-bg {
   background-color: #f3f4f6;
   padding: 80px 20px;
@@ -153,6 +165,7 @@ const filteredDepartments = computed(() => {
   margin: 0 auto;
 }
 
+/* Filter sang controls bar styling */
 .filter-bar {
   display: flex;
   flex-direction: column;
@@ -215,12 +228,16 @@ const filteredDepartments = computed(() => {
   margin-bottom: 20px;
 }
 
+
+/* Auto2 responsive grid para sa faculty cards */
 .faculty-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 20px;
 }
 
+
+/* Isa2 member card nga may hover elevation */
 .faculty-card {
   background: #ffffff;
   border-radius: 12px;
@@ -236,6 +253,8 @@ const filteredDepartments = computed(() => {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+
+/* Bilog nga avatar container */
 .avatar-wrapper {
   width: 90px;
   height: 90px;
@@ -252,6 +271,8 @@ const filteredDepartments = computed(() => {
   object-fit: cover;
 }
 
+
+/* Typography styles for details */
 .faculty-name {
   font-size: 1.05rem;
   font-weight: 700;

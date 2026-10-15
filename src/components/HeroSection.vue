@@ -1,5 +1,7 @@
 <template>
+  <!-- Section nga may scroll-anchor ID nga may matching Vue Router navigation -->
   <section id="hero" class="hero-container">
+    <!-- Duwa ka column grid layout -->
     <div class="hero-grid">
       <div class="hero-content">
         <span class="badge">Central Philippine University</span>
